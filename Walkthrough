@@ -44,7 +44,7 @@ Nmap done: 1 IP address (1 host up) scanned in 9.28 seconds
 
 
 On the bottom, before Service Info: yada yada, we see _http-title: Login.
-Which tells us that we have a login site and as we copy paste the machine's Ip address into the url/address bar WE DO indeed get prompted with a login page!
+Which tells us that we have a login page and as we copy paste the machine's Ip address into the url/address bar WE DO indeed get prompted with a login page!
 
 Afterwards, lets right click and view page source! Or, well... CTRL + U as told by the plaintext...
 
