@@ -7,7 +7,7 @@ Lets get on with it!
 
 First, before we do anything lets add the ip address into /etc/hosts/!
 sudo nano /etc/hosts/
-10.113.165.251 neighbour.thm (HAS TO BE YOUR MACHINE'S IP ADDRESS DONT COPY PASTE MINE!!!)
+10.113.165.251 neighbour.thm (HAS TO BE YOUR TARGET'S IP ADDRESS DONT COPY PASTE MINE!!!)
 Exit x Save with CTRL + X --> Save this buffer? (Press Y), then Enter.
 
 Then, we get to use... (epic drumroll...) NMAP!
