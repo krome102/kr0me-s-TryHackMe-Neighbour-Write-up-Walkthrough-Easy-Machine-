@@ -1,0 +1,118 @@
+Okay! So, welcome to my first ever write-up!
+Here I will explain step by step how I got the flag in TryHackMe's "Neighbour"!
+
+I dont really have a site and I havent commited much on github.
+So I am REALLY sorry that you have to stare at a stale repo...
+Lets get on with it!
+
+First, before we do anything lets add the ip address into /etc/hosts/!
+sudo nano /etc/hosts/
+10.113.165.251 neighbour.thm (HAS TO BE YOUR MACHINE'S IP ADDRESS DONT COPY PASTE MINE!!!)
+Exit x Save with CTRL + X --> Save this buffer? (Press Y), then Enter.
+
+Then, we get to use... (epic drumroll...) NMAP!
+So, I scan the machine like this:
+nmap -sC -sV -Pn 10.113.165.251
+
+We get:
+
+┌──(kali㉿kali)-[~]
+└─$ nmap -sC -sV -Pn 10.113.165.251
+Starting Nmap 7.98 ( https://nmap.org ) at 2026-06-24 11:27 -0400
+Nmap scan report for 10.113.165.251
+Host is up (0.037s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 a8:6b:11:35:09:c1:ca:1c:22:0b:47:e7:34:27:72:d8 (RSA)
+|   256 b4:e7:46:a0:37:ed:d6:aa:e3:e0:a6:6b:60:22:8b:84 (ECDSA)
+|_  256 d5:d9:b0:74:45:17:32:b6:88:3f:1f:88:14:b5:09:08 (ED25519)
+80/tcp open  http    Apache httpd 2.4.53 ((Debian))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-title: Login
+|_http-server-header: Apache/2.4.53 (Debian)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 9.28 seconds
+
+
+
+
+On the bottom, before Service Info: yada yada, we see _http-title: Login.
+Which tells us that we have a login site and as we copy paste the machine's Ip address into the url/address bar WE DO indeed get prompted with a login page!
+
+Afterwards, lets right click and view page source! Or, well... CTRL + U as told by the plaintext...
+
+We notice on the bottom, where the green text is located, that the source code contains guest credentials.
+
+
+
+
+
+
+-- SOURCE CODE!!! --
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{ font: 14px sans-serif; }
+        .wrapper{ width: 360px; padding: 20px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h2>Login</h2>
+        <p>Please fill in your credentials to login.</p>
+
+        
+        <form action="/index.php" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control " value="">
+                <span class="invalid-feedback"></span>
+            </div>    
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control ">
+                <span class="invalid-feedback"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Login">
+            </div>
+            <p>Don't have an account? Use the guest account! (<code>Ctrl+U</code>)</p>
+THIS LINE THIS LINE THIS LINE <!-- use guest:guest credentials until registration is fixed. "admin" user account is off limits!!!!! --> THIS LINE THIS LINE THIS LINE 
+        </form>
+    </div>
+</body>
+</html>
+
+
+Apparently, the credentials are guest:guest.
+
+Lets give it a try...
+
+...............
+
+And we're IN!!!
+
+From here on we see that the url-
+
+http://10.114.130.13/profile.php?user=guest
+
+Contains user=guest, and logically I tried to change guest to admin and guess what...
+
+WE'RE DOUBLE IN!!!!!!!!!
+
+Hi, admin. Welcome to your site. The flag is: flag{...}
+
+Thank you for reading through this VERY confusing and ugly walkthrough! I hope it helped!
+I decided to make it since there werent any on TryHackMe's page!
+Have a nice day!!!!! :DDDD
